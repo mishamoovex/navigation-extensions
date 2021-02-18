@@ -1,10 +1,23 @@
 package com.mishamoovex.backstackresults
 
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.observe
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 
-inline fun <T> Fragment.registerForResult(
+/**
+ * Registers for result callbacks using the [NavController] [NavBackStackEntry] back stack
+ * and [SavedStateHandle].
+ *
+ * Receives results while the lifecycle owner alive.
+ *
+ * @param key the key of the data request
+ *
+ * @param resultEvent the result callback with the data returned from the [sendAsResult]
+ */
+inline fun <T : Any> Fragment.registerForResult(
     key: String,
     crossinline resultEvent: (T) -> Unit
 ) {
@@ -12,12 +25,22 @@ inline fun <T> Fragment.registerForResult(
         .currentBackStackEntry
         ?.savedStateHandle
         ?.getLiveData<T>(key)
-        ?.observe(owner =  viewLifecycleOwner) {
+        ?.observe(owner = viewLifecycleOwner) {
             resultEvent.invoke(it)
         }
 }
 
-inline fun <T> Fragment.registerForResultOnce(
+/**
+ * Registers for result callbacks using the [NavController] [NavBackStackEntry] back stack
+ * and [SavedStateHandle].
+ *
+ * Receives result once. Unregistered automatically after getting result.
+ *
+ * @param key the key of the data request
+ *
+ * @param resultEvent the result callback with the data returned from the [sendAsResult]
+ */
+inline fun <T : Any> Fragment.registerForResultOnce(
     key: String,
     crossinline resultEvent: (T) -> Unit
 ) {
@@ -25,12 +48,17 @@ inline fun <T> Fragment.registerForResultOnce(
         .currentBackStackEntry
         ?.savedStateHandle
         ?.getLiveData<T>(key)
-        ?.observe(owner =  viewLifecycleOwner) {
+        ?.observe(owner = viewLifecycleOwner) {
             resultEvent.invoke(it)
             clearResultCallback<T>(key)
         }
 }
 
+/**
+ * Unregisters result callback from the [NavBackStackEntry].
+ *
+ * @param key the key of the data request
+ */
 fun <T> Fragment.clearResultCallback(key: String) {
     findNavController()
         .currentBackStackEntry
