@@ -1,0 +1,3 @@
+include ':backStackResults'
+include ':app'
+rootProject.name = "navigation-extensions"
