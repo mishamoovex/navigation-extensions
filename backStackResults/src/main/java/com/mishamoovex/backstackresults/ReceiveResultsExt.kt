@@ -15,7 +15,7 @@ import androidx.navigation.fragment.findNavController
  *
  * @param key the key of the data request
  *
- * @param resultEvent the result callback with the data returned from the [sendAsResult]
+ * @param resultEvent the result callback with the data returned from the [sendResult]
  */
 inline fun <T : Any> Fragment.registerForResult(
     key: String,
@@ -38,7 +38,7 @@ inline fun <T : Any> Fragment.registerForResult(
  *
  * @param key the key of the data request
  *
- * @param resultEvent the result callback with the data returned from the [sendAsResult]
+ * @param resultEvent the result callback with the data returned from the [sendResult]
  */
 inline fun <T : Any> Fragment.registerForResultOnce(
     key: String,

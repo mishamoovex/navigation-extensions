@@ -27,10 +27,10 @@ import androidx.navigation.fragment.findNavController
  *
  * @param data the result data to return back to the caller
  */
-fun <T: Any> Fragment.sendAsResult(
-    @IdRes destinationId: Int? = null,
+fun <T: Any> Fragment.sendResult(
     key: String,
-    data: T
+    data: T,
+    @IdRes destinationId: Int? = null
 ) {
     //fetch backStackEntry as per the data destination
     val backStackEntry = with(findNavController()) {
