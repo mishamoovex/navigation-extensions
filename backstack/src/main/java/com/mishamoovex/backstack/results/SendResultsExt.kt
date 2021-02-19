@@ -1,4 +1,4 @@
-package com.mishamoovex.backstackresults
+package com.mishamoovex.backstack.results
 
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
